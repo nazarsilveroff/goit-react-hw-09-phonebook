@@ -7,7 +7,7 @@ const Contacts = ({ contacts, deleteContact }) => {
     <ContactWrapper>
       <h2>Contacts</h2>
       <ul>
-        {contacts.map((contact) => (
+        {contacts?.map((contact) => (
           <ContactItems
             contact={contact}
             key={contact.id}

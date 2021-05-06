@@ -2,32 +2,56 @@ import React, { Component } from "react";
 import Contacts from "./Contacts/Contacts";
 import ClientsFilter from "./Form/Filter/filter";
 import Form from "./Form/Form";
-import { v4 as id } from "uuid";
+// import { v4 as id } from "uuid";
 import { PhoneBookWrapper } from "./phoneBookStyled";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const URL = `https://test-35238-default-rtdb.firebaseio.com/`;
+const BASE = `phoneBook.json`;
 class PhoneBook extends Component {
   state = {
-    contacts: [
-      { id: id(), name: "Rosie Simpson", number: "459-12-56" },
-      { id: id(), name: "Hermione Kline", number: "443-89-12" },
-      { id: id(), name: "Eden Clements", number: "645-17-79" },
-      { id: id(), name: "Annie Copeland", number: "227-91-26" },
-    ],
+    contacts: [],
     filter: "",
   };
 
-  addContact = (contact) => {
-    this.state.contacts.some(({ name }) => name === contact.name)
-      ? alert(`${contact.name}, is already in contacts!`)
-      : this.setState((prevState) => ({
-          contacts: [...prevState.contacts, { ...contact, id: id() }],
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get(URL + BASE);
+      if (data) {
+        const contacts = Object.keys(data).map((key) => ({
+          id: key,
+          ...data[key],
         }));
+        this.setState({ contacts });
+      } else return;
+    } catch (error) {toast.error(`☠️${error}, oh damn it 404!!`);}
+  }
+
+  addContact = async (contact) => {
+    try {
+      if (this.state.contacts.some(({ name }) => name === contact.name)) {
+        // alert(`${contact.name}, is already in contacts!`);
+        toast.warn(`🦄${contact.name}, is already in contacts!`);
+      } else {
+        const { data } = await axios.post(URL + BASE, contact);
+        this.setState((prevState) => ({
+          contacts: [...prevState.contacts, { ...contact, id: data.name }],
+        }));
+      }
+    } catch (error) {toast.error(`☠️${error}, oh damn it 404!!`)}
   };
 
-  deleteContact = (e) => {
+  deleteContact = async (e) => {
     const { id } = e.target;
-    this.setState({
-      contacts: this.state.contacts.filter((contact) => contact.id !== id),
-    });
+
+    try {
+      await axios.delete(URL + `phoneBook/${id}.json`);
+      this.setState({
+        contacts: this.state.contacts.filter((contact) => contact.id !== id),
+      });
+    } catch (error) {toast.error(`☠️${error}, oh damn it 404!!`);}
   };
   setFilter = (e) => {
     const { value } = e.target;
@@ -42,6 +66,7 @@ class PhoneBook extends Component {
   render() {
     return (
       <PhoneBookWrapper>
+        <ToastContainer />
         <h1>Phonebook</h1>
         <Form addContact={this.addContact} />
         <ClientsFilter setFilter={this.setFilter} filter={this.state.filter} />

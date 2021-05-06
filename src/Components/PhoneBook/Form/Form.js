@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {FormWrapper } from './formStyled'
+import { FormWrapper } from "./formStyled";
+
 class Form extends Component {
   state = {
     name: "",
