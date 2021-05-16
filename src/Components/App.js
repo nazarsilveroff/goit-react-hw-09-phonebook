@@ -1,9 +1,8 @@
-import React from 'react';
-import PhoneBook from './PhoneBook/PhoneBook';
+import React from "react";
+
+import PhoneBook from "./PhoneBook/PhoneBook";
 const App = () => {
-    return (
-        <PhoneBook/>
-    );
-}
+  return <PhoneBook />;
+};
 
 export default App;
