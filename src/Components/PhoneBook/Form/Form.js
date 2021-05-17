@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { resetError } from "../../../redux/phoneBook/error/erorAction";
 import { FormWrapper } from "./formStyled";
 
 class Form extends Component {
@@ -11,6 +13,7 @@ class Form extends Component {
     this.props.addContact(this.state);
   };
   onHandlerChange = (e) => {
+    this.props.error && this.props.resetError();
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
@@ -46,5 +49,10 @@ class Form extends Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    error: state.contacts.error,
+  };
+};
 
-export default Form;
+export default connect(mapStateToProps, { resetError })(Form);

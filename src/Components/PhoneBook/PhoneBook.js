@@ -3,69 +3,37 @@ import Contacts from "./Contacts/Contacts";
 import ClientsFilter from "./Form/Filter/filter";
 import Form from "./Form/Form";
 import { PhoneBookWrapper } from "./phoneBookStyled";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import {
-  addALLContact,
-  addContact,
-  deleteContact,
-} from "../../redux/phoneBook/items/itemsAction";
-import { setFilter } from "../../redux/phoneBook/filter/filterAction";
+  addALLContactOptions,
+  addContactOptions,
+  deleteContactOptions,
+} from "../../redux/phoneBook/items/itemsOptions";
+import { setFilterOptions } from "../../redux/phoneBook/filter/filterOptions";
+import Loader from "react-loader-spinner";
 
-const URL = `https://test-35238-default-rtdb.firebaseio.com/`;
-const BASE = `phoneBook.json`;
 class PhoneBook extends Component {
   async componentDidMount() {
-    try {
-      const { data } = await axios.get(URL + BASE);
-      if (data) {
-        const contacts = Object.keys(data).map((key) => ({
-          id: key,
-          ...data[key],
-        }));
-        this.props.addALLContact(contacts);
-        // this.setState({ contacts });
-      } else return;
-    } catch (error) {
-      toast.error(`☠️${error}, oh damn it 404!!`);
-    }
+    this.props.addALLContactOptions();
   }
 
   addContact = async (contact) => {
-    try {
-      if (this.props.contacts.items.some(({ name }) => name === contact.name)) {
-        toast.warn(`🦄${contact.name}, is already in contacts!`);
-      } else {
-        const { data } = await axios.post(URL + BASE, contact);
-        this.props.addContact({ ...contact, id: data.name });
-        // this.setState((prevState) => ({
-        //   contacts: [...prevState.contacts, { ...contact, id: data.name }],
-        // }));
-      }
-    } catch (error) {
-      toast.error(`☠️${error}, oh damn it 404!!`);
+    if (this.props.contacts.items.some(({ name }) => name === contact.name)) {
+      toast.warn(`🦄${contact.name}, is already in contacts!`);
+    } else {
+      this.props.addContactOptions(contact);
     }
   };
 
   deleteContact = async (e) => {
     const { id } = e.target;
-
-    try {
-      await axios.delete(URL + `phoneBook/${id}.json`);
-      this.props.deleteContact(id);
-      // this.setState({
-      //   contacts: this.state.contacts.filter((contact) => contact.id !== id),
-      // });
-    } catch (error) {
-      toast.error(`☠️${error}, oh damn it 404!!`);
-    }
+    this.props.deleteContactOptions(id);
   };
   setFilter = (e) => {
     const { value } = e.target;
-    this.props.setFilter(value);
-    // this.setState({ filter: value });
+    this.props.setFilterOptions(value);
   };
   getFilteredContacts = () => {
     return this.props.contacts.items?.filter((contact) =>
@@ -85,10 +53,14 @@ class PhoneBook extends Component {
           setFilter={this.setFilter}
           filter={this.props.contacts.filter}
         />
-        <Contacts
-          contacts={this.getFilteredContacts()}
-          deleteContact={this.deleteContact}
-        />
+        {this.props.contacts.loader ? (
+          <Loader />
+        ) : (
+          <Contacts
+            contacts={this.getFilteredContacts()}
+            deleteContact={this.deleteContact}
+          />
+        )}
       </PhoneBookWrapper>
     );
   }
@@ -97,23 +69,13 @@ const mapStateToProps = (state) => ({
   contacts: {
     items: state.contacts.items,
     filter: state.contacts.filter,
+    loader: state.contacts.loader,
   },
 });
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addALLContact: (items) => {
-      dispatch(addALLContact(items));
-    },
-    addContact: (items) => {
-      dispatch(addContact(items));
-    },
-    deleteContact: (items) => {
-      dispatch(deleteContact(items));
-    },
-    setFilter: (filter) => {
-      dispatch(setFilter(filter));
-    },
-  };
+const mapDispatch = {
+  addALLContactOptions,
+  addContactOptions,
+  deleteContactOptions,
+  setFilterOptions,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(PhoneBook);
+export default connect(mapStateToProps, mapDispatch)(PhoneBook);
