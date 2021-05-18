@@ -13,6 +13,8 @@ import {
 } from "../../redux/phoneBook/items/itemsOptions";
 import { setFilterOptions } from "../../redux/phoneBook/filter/filterOptions";
 import Loader from "react-loader-spinner";
+import { getFilter, getFilteredContacts } from "../../redux/phoneBook/filter/filterSelectors";
+import { getLoader } from "../../redux/phoneBook/loading/loaderSelectors";
 
 class PhoneBook extends Component {
   async componentDidMount() {
@@ -35,13 +37,13 @@ class PhoneBook extends Component {
     const { value } = e.target;
     this.props.setFilterOptions(value);
   };
-  getFilteredContacts = () => {
-    return this.props.contacts.items?.filter((contact) =>
-      contact.name
-        .toLowerCase()
-        .includes(this.props.contacts.filter?.toLowerCase())
-    );
-  };
+  // getFilteredContacts = () => {
+  //   return this.props.contacts.items?.filter((contact) =>
+  //     contact.name
+  //       .toLowerCase()
+  //       .includes(this.props.contacts.filter?.toLowerCase())
+  //   );
+  // };
 
   render() {
     return (
@@ -57,7 +59,7 @@ class PhoneBook extends Component {
           <Loader />
         ) : (
           <Contacts
-            contacts={this.getFilteredContacts()}
+            contacts={this.props.contacts.items}
             deleteContact={this.deleteContact}
           />
         )}
@@ -65,11 +67,12 @@ class PhoneBook extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   contacts: {
-    items: state.contacts.items,
-    filter: state.contacts.filter,
-    loader: state.contacts.loader,
+    items: getFilteredContacts(state),
+    filter: getFilter(state),
+    loader: getLoader(state),
   },
 });
 const mapDispatch = {

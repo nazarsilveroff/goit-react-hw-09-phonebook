@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { resetError } from "../../../redux/phoneBook/error/erorAction";
+import { getError } from "../../../redux/phoneBook/error/errorSelectors";
 import { FormWrapper } from "./formStyled";
 
 class Form extends Component {
@@ -49,9 +50,10 @@ class Form extends Component {
     );
   }
 }
+
 const mapStateToProps = (state, ownProps) => {
   return {
-    error: state.contacts.error,
+    error: getError(state),
   };
 };
 

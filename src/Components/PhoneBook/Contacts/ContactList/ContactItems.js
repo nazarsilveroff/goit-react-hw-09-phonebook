@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 const ContactItems = ({ contact, deleteContact }) => {
   const { name, number, id } = contact;
   return (
@@ -13,4 +13,4 @@ const ContactItems = ({ contact, deleteContact }) => {
   );
 };
 
-export default ContactItems;
+export default memo(ContactItems);

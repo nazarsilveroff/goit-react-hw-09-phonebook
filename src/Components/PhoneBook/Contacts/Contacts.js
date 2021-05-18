@@ -1,4 +1,3 @@
-import React from "react";
 import ContactItems from "./ContactList/ContactItems";
 import { ContactWrapper } from "./contactStyled";
 
