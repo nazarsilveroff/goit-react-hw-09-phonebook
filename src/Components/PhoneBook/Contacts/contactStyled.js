@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const ContactWrapper = styled.form`
-ul{
+/* ul{
     list-style:none;
     display: flex;
     flex-direction:column;
@@ -14,5 +14,5 @@ li{
     justify-content:space-between;
     margin-bottom:10px;
 }
-}
+} */
 `

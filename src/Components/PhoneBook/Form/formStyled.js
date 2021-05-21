@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const FormWrapper = styled.form`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   width:250px;
   margin:0 auto;
@@ -15,5 +15,5 @@ export const FormWrapper = styled.form`
       width: 50%;
       margin:0 auto;
   }
-  
+   */
 `;
