@@ -10,7 +10,6 @@ class HomePage extends Component {
       `https://api.github.com/users/nazarsilveroff`
     );
     this.setState({ user: data });
-    console.log(data);
   }
   render() {
     const { user } = this.state;
@@ -26,11 +25,14 @@ class HomePage extends Component {
                 <h1 className="text-center font-semibold text-3xl lg:text-4xl text-gray-800 p-2">
                   Author of the project
                 </h1>
-                <img
-                  className="w-full h-56 object-cover object-center"
-                  src={user.avatar_url}
-                  alt="avatar"
-                />
+                <a href={user.html_url} target="_blank" rel="noreferrer">
+                  <img
+                    className="w-full h-56 object-cover object-center"
+                    src={user.avatar_url}
+                    alt="avatar"
+                  />
+                </a>
+
                 <div className="flex items-center px-6 py-3 bg-gray-900">
                   <svg
                     className="h-6 w-6 text-white fill-current"
@@ -43,9 +45,17 @@ class HomePage extends Component {
                   </p>
                 </div>
                 <div className="py-4 px-6">
-                  <p className="text-2xl font-semibold text-gray-800">
-                    {user.name}
+                  <p className=" text-center text-xs text-gray-800">
+                    GitHub bio
                   </p>
+                  <a
+                    href={user.html_url}
+                    target="_blank"
+                    className="text-2xl font-semibold text-gray-800"
+                    rel="noreferrer"
+                  >
+                    {user.name}
+                  </a>
                   <p className="py-2 text-lg text-gray-700">{user.bio}</p>
                   <div className="flex items-center mt-4 text-gray-700">
                     <svg className="h-6 w-6 fill-current" viewBox="0 0 20 20">
