@@ -1,6 +1,8 @@
 import React, { memo } from "react";
-const ContactItems = ({ contact, deleteContact }) => {
+import { useContacts } from "../../../hooks/useContacts";
+const ContactItems = ({ contact }) => {
   const { name, number, id } = contact;
+  const { deleteContact } = useContacts();
   return (
     <>
       <li className="flex mx-4 my-2">
@@ -11,7 +13,7 @@ const ContactItems = ({ contact, deleteContact }) => {
           className="px-4 py-2 text-xs font-semibold tracking-wider text-white rounded bg-gray-800 hover:bg-gray-600"
           id={id}
           type="button"
-          onClick={deleteContact}
+          onClick={(e) => deleteContact(id)}
         >
           DELETE
         </button>

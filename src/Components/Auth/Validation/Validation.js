@@ -8,3 +8,8 @@ export const validationSchema = Yup.object().shape({
     .min(6, "min-6 simbols")
     .max(12, "max-12 simbols"),
 });
+
+export const textSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  number: Yup.string().required(),
+});

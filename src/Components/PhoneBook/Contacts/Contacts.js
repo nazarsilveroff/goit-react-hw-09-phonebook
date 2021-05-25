@@ -1,11 +1,10 @@
-import { connect } from "react-redux";
-import { getFilteredContacts } from "../../../redux/phoneBook/filter/filterSelectors";
-import { getLoader } from "../../../redux/phoneBook/loading/loaderSelectors";
+import { useContacts } from "../../hooks/useContacts";
 import LoaderContacts from "../../loaders/LoaderContacts/LoaderContacts";
 
 import ContactItems from "./ContactList/ContactItems";
 
-const Contacts = ({ items, deleteContact, loader }) => {
+const Contacts = () => {
+  const { items, loader } = useContacts();
   return (
     <>
       <h2 className="text-center font-semibold text-2xl lg:text-2xl text-gray-800">
@@ -17,11 +16,7 @@ const Contacts = ({ items, deleteContact, loader }) => {
         ) : (
           <ul className="flex-column">
             {items?.map((contact) => (
-              <ContactItems
-                contact={contact}
-                key={contact.id}
-                deleteContact={deleteContact}
-              />
+              <ContactItems contact={contact} key={contact.id} />
             ))}
           </ul>
         )}
@@ -29,8 +24,5 @@ const Contacts = ({ items, deleteContact, loader }) => {
     </>
   );
 };
-const mapState = (state) => ({
-  loader: getLoader(state),
-  items: getFilteredContacts(state),
-});
-export default connect(mapState)(Contacts);
+
+export default Contacts;

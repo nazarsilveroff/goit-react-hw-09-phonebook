@@ -1,5 +1,7 @@
 import React from "react";
-const ClientsFilter = ({ filter, setFilter }) => {
+import { useFilter } from "../../../hooks/useFilter";
+const ClientsFilter = () => {
+  const { filter, setFilter } = useFilter();
   return (
     <label className="text-center block text-xs font-semibold text-gray-600 uppercase my-2">
       Find your contact by name
@@ -21,7 +23,7 @@ const ClientsFilter = ({ filter, setFilter }) => {
           placeholder="Search your contacts"
           type="text"
           value={filter}
-          onChange={setFilter}
+          onChange={(e) => setFilter(e.target.value)}
         />
       </div>
     </label>

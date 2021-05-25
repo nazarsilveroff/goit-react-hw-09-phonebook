@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-const NavItems = ({ item, location, auth }) => {
+import { useNav } from "../../hooks/useNav";
+const NavItems = ({ item }) => {
+  const { location, authToken } = useNav();
   return (
     <>
       {!item.private && !item.restricted && (
@@ -18,7 +20,7 @@ const NavItems = ({ item, location, auth }) => {
           </NavLink>
         </li>
       )}
-      {auth && item.private && !item.restricted && (
+      {authToken && item.private && !item.restricted && (
         <li className="text-md no-underline text-black hover:text-blue-dark ml-2 px-1">
           <NavLink
             to={{
@@ -33,7 +35,7 @@ const NavItems = ({ item, location, auth }) => {
           </NavLink>
         </li>
       )}
-      {!auth && !item.private && item.restricted && (
+      {!authToken && !item.private && item.restricted && (
         <li className="text-md no-underline text-black hover:text-blue-dark ml-2 px-1">
           <NavLink
             to={{
