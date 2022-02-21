@@ -1,5 +1,5 @@
 import React from "react";
-import { useFilter } from "../../../hooks/useFilter";
+import { useFilter } from "../../../../utils/hooks/useFilter";
 const ClientsFilter = () => {
   const { filter, setFilter } = useFilter();
   return (

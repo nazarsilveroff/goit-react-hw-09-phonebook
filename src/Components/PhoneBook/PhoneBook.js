@@ -4,7 +4,7 @@ import ClientsFilter from "./Form/Filter/filter";
 import FormContact from "./Form/Form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useContacts } from "../hooks/useContacts";
+import { useContacts } from "../../utils/hooks/useContacts";
 
 const PhoneBook = () => {
   const { getAllContact } = useContacts();

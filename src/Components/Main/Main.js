@@ -3,7 +3,7 @@ import { Switch } from "react-router";
 import { mainRoutes } from "../../routes/mainRoates";
 import PrivateRoute from "../../routes/PrivateRoute";
 import PublicRoates from "../../routes/PublicRoates";
-import { useNav } from "../hooks/useNav";
+import { useNav } from "../../utils/hooks/useNav";
 import LoaderMain from "../loaders/LoaderMain/LoaderMain";
 
 const Main = () => {

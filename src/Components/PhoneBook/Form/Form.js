@@ -3,7 +3,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import TextInput from "../../Auth/TextInput/TextInput";
 import { textSchema } from "../../Auth/Validation/Validation";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../utils/hooks/useForm";
 const FormContact = () => {
   const { items, addContact } = useForm();
   return (

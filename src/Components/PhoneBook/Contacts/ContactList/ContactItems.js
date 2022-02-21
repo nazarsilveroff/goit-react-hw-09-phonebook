@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { useContacts } from "../../../hooks/useContacts";
+import { useContacts } from "../../../../utils/hooks/useContacts";
 const ContactItems = ({ contact }) => {
   const { name, number, id } = contact;
   const { deleteContact } = useContacts();

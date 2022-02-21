@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { validationSchema } from "./Validation/Validation";
 import TextInput from "./TextInput/TextInput";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../utils/hooks/useAuth";
 
 const Auth = () => {
   const { location, login, registration } = useAuth();

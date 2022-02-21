@@ -1,4 +1,4 @@
-import { useContacts } from "../../hooks/useContacts";
+import { useContacts } from "../../../utils/hooks/useContacts";
 import LoaderContacts from "../../loaders/LoaderContacts/LoaderContacts";
 
 import ContactItems from "./ContactList/ContactItems";

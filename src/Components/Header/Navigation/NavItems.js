@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useNav } from "../../hooks/useNav";
+import { useNav } from "../../../utils/hooks/useNav";
 const NavItems = ({ item }) => {
   const { location, authToken } = useNav();
   return (

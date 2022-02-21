@@ -4,7 +4,10 @@ import { logOut } from "../../redux/auth/authActions";
 
 const UserInfo = ({ displayName, auth }) => {
   const dispatch = useDispatch();
-  const signOut = () => dispatch(logOut());
+  const signOut = () => {
+    dispatch(logOut())
+    // app.auth().singOut()
+  };
   return auth ? (
     <>
       <div className="flex items-center sm:flex-row ml-3 pl-2 border-l-2 border-gray-700 h-full">
